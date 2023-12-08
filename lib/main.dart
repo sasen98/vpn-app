@@ -241,6 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
               visible: !isToConnect,
               child: InkWell(
                 child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   color: Colors.red,
                   width: 1.sw,
                   height: 50.h,
