@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vpn_app/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,14 +11,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Vpn App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Vpn App',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: child,
+        );
+      },
+      child: const MyHomePage(),
     );
   }
 }
@@ -39,54 +48,229 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Vpn App'),
       ),
-      body: Center(
-        child: ValueListenableBuilder(
-            valueListenable: _isToConnect,
-            builder: (_, isToConnect, __) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    isToConnect ? "Connected" : "Ready",
-                    style: TextStyle(
-                        color: isToConnect ? AppColors.green : AppColors.red,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(78),
-                    onTap: () {
-                      _isToConnect.value = !_isToConnect.value;
-                    },
-                    child: Container(
-                        height: 180,
-                        width: 180,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color:
-                                isToConnect ? AppColors.green : AppColors.grey),
-                        padding: const EdgeInsets.all(13),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          padding: const EdgeInsets.all(2),
-                          alignment: Alignment.center,
-                          child: Text(
-                            isToConnect ? "Disconnect" : "Connect",
-                            style: const TextStyle(
-                                color: AppColors.blue,
-                                fontSize: 20,
+      body: ValueListenableBuilder(
+          valueListenable: _isToConnect,
+          builder: (_, isToConnect, __) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    10.verticalSpace,
+                    Visibility(
+                      visible: isToConnect,
+                      child: Flexible(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 20.h),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.red),
+                                  child: Icon(
+                                    Icons.flag_circle_rounded,
+                                    color: Colors.white,
+                                    size: 37.w,
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                Text(
+                                  "Location",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp),
+                                ),
+                                const Text("Free"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 20.h),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.grey),
+                                  child: Icon(
+                                    Icons.bar_chart_sharp,
+                                    color: Colors.white,
+                                    size: 37.w,
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                Text(
+                                  "60 ms",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp),
+                                ),
+                                const Text("Ping"),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 3,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            isToConnect ? "Connected" : "Ready",
+                            style: TextStyle(
+                                color: isToConnect
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w700),
                           ),
-                        )),
+                          15.verticalSpace,
+                          InkWell(
+                            borderRadius: BorderRadius.circular(190.r),
+                            onTap: () {
+                              _isToConnect.value = !_isToConnect.value;
+                            },
+                            child: Container(
+                                height: 180.h,
+                                width: 180.w,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: isToConnect
+                                        ? AppColors.green
+                                        : AppColors.grey),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 13.w, vertical: 13.h),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white),
+                                  padding: EdgeInsets.all(2.w),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    isToConnect ? "Disconnect" : "Connect",
+                                    style: TextStyle(
+                                        color: AppColors.blue,
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                )),
+                          ),
+                          50.verticalSpace,
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: isToConnect,
+                      child: Flexible(
+                        flex: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 20.h),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.green),
+                                  child: Icon(
+                                    Icons.download_for_offline_sharp,
+                                    color: Colors.white,
+                                    size: 37.w,
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                Text(
+                                  "0 kbps",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp),
+                                ),
+                                const Text("Download"),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.w, vertical: 20.h),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.blue),
+                                  child: Icon(
+                                    Icons.upload_sharp,
+                                    color: Colors.white,
+                                    size: 37.w,
+                                  ),
+                                ),
+                                5.verticalSpace,
+                                Text(
+                                  "0 kbps",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp),
+                                ),
+                                const Text("Upload"),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    20.verticalSpace,
+                  ],
+                ),
+              ),
+            );
+          }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: ValueListenableBuilder(
+          valueListenable: _isToConnect,
+          builder: (_, isToConnect, __) {
+            return Visibility(
+              visible: !isToConnect,
+              child: InkWell(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  color: Colors.red,
+                  width: 1.sw,
+                  height: 50.h,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.flag_circle_rounded,
+                        color: Colors.white,
+                        size: 37.w,
+                      ),
+                      Text(
+                        "Select Country / Location",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp),
+                      ),
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: Colors.white,
+                        size: 37.w,
+                      ),
+                    ],
                   ),
-                ],
-              );
-            }),
-      ),
+                ),
+              ),
+            );
+          }),
     );
   }
 }
