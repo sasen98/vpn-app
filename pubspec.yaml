@@ -11,14 +11,41 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+
+  #screen size
   flutter_screenutil: ^5.9.0
+
+  #spalsh screen
   flutter_native_splash: ^2.3.7
+
+  #dependency injection
+  get_it: ^7.6.4
+  injectable: ^2.3.2
+
+  #http request
+  dio: ^5.4.0
+  dartz: ^0.10.1
+
+  #state management
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
+
+  #csv
+  csv: ^5.1.1
+
+  #toast
+  bot_toast: ^4.1.3
+
+  #local storage
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  injectable_generator: ^2.4.1
+  build_runner: ^2.4.7
 
 flutter:
   uses-material-design: true

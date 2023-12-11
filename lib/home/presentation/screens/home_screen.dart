@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_app/constants/app_colors.dart';
+import 'package:vpn_app/route/routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -211,6 +212,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return Visibility(
               visible: !isToConnect,
               child: InkWell(
+                onTap: () =>
+                    Navigator.of(context).pushNamed(Routes.locationScreenRoute),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   color: Colors.red,
