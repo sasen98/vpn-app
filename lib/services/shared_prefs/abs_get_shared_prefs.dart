@@ -1,4 +1,4 @@
-import 'package:vpn_app/services/vpn_service/domain/model/vpn_model.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 
 abstract class AbsGetSharedPrefsData {
   Future<void> setSelectedVpnServer(VpnModel vpnModel);

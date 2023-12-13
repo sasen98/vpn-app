@@ -124,11 +124,11 @@ class SharedPrefsServiceImpl implements AbsSharedPrefsService {
     var sharedPreferences = getIt<SharedPreferences>();
     try {
       if (sharedPreferences.getStringList(key) != null) {
-        List<T> _temp = [];
+        List<T> temp = [];
         sharedPreferences.getStringList(key)?.map((e) {
-          _temp.add(fromJson(json.decode(e)));
+          temp.add(fromJson(json.decode(e)));
         });
-        return _temp;
+        return temp;
       } else {
         return null;
       }

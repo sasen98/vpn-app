@@ -2,7 +2,7 @@ import 'package:vpn_app/services/di/di_injectable.dart';
 import 'package:vpn_app/services/shared_prefs/abs_get_shared_prefs.dart';
 import 'package:vpn_app/services/shared_prefs/abs_shared_prefs_service.dart';
 import 'package:vpn_app/services/shared_prefs/shared_prefs_keys.dart';
-import 'package:vpn_app/services/vpn_service/domain/model/vpn_model.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 
 class GetSharedPrefsDataImpl implements AbsGetSharedPrefsData {
   @override

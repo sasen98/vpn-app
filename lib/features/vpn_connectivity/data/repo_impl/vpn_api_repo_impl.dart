@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:vpn_app/services/di/di_injectable.dart';
 import 'package:vpn_app/services/shared_prefs/abs_get_shared_prefs.dart';
-import 'package:vpn_app/services/vpn_service/domain/abs_repo/abs_vpn_api_repo.dart';
-import 'package:vpn_app/services/vpn_service/domain/model/ip_detail_model.dart';
-import 'package:vpn_app/services/vpn_service/domain/model/vpn_model.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/abs_repo/abs_vpn_api_repo.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/model/ip_detail_model.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 import 'package:dio/dio.dart';
 import 'package:csv/csv.dart';
 import 'package:vpn_app/widgets/custom_toast.dart';

@@ -6,7 +6,7 @@ import 'package:vpn_app/route/routes.dart';
 class RouteGenerator {
   RouteGenerator._();
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    Object? arguments = settings.arguments;
+    // Object? arguments = settings.arguments;
     switch (settings.name) {
       case Routes.homeScreenRoute:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
