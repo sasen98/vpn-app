@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_app/constants/app_colors.dart';
+import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
 import 'package:vpn_app/route/routes.dart';
+import 'package:vpn_app/services/di/di_injectable.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -13,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  initState() {
+    getIt<VpnServersBloc>().add(FetchAllVpnServersEvent());
+    super.initState();
+  }
+
   final ValueNotifier<bool> _isToConnect = ValueNotifier<bool>(false);
   @override
   Widget build(BuildContext context) {
