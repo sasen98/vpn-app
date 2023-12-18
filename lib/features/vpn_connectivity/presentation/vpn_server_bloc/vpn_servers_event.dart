@@ -13,3 +13,5 @@ final class SelectVpnServerEvent extends VpnServersEvent {
   const SelectVpnServerEvent({required this.selectedModel});
   final VpnModel selectedModel;
 }
+
+final class ResetVpnServersEvent extends VpnServersEvent {}

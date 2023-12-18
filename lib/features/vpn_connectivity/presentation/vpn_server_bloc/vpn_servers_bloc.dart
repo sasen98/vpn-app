@@ -15,6 +15,7 @@ part 'vpn_servers_state.dart';
 class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
   VpnServersBloc() : super(VpnServersInitialState()) {
     on<VpnServersEvent>((event, emit) {});
+
     on<FetchAllVpnServersEvent>((event, emit) async {
       emit(
         state.copyWith(
@@ -33,6 +34,9 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
     });
     on<SelectVpnServerEvent>((event, emit) {
       emit(state.copyWith(selectedVpnServer: event.selectedModel));
+    });
+    on<ResetVpnServersEvent>((event, emit) {
+      emit(VpnServersInitialState());
     });
   }
 }

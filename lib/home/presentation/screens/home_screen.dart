@@ -15,13 +15,41 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   @override
   initState() {
-    // if (getIt<VpnServersBloc>().state.vpnServers.isEmpty) {
-    getIt<VpnServersBloc>().add(FetchAllVpnServersEvent());
-    // }
+    if (getIt<VpnServersBloc>().state.vpnServers.isEmpty) {
+      getIt<VpnServersBloc>().add(FetchAllVpnServersEvent());
+    }
     super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.detached:
+        print("Data::: detached");
+        getIt<VpnServersBloc>().add(ResetVpnServersEvent());
+        break;
+      case AppLifecycleState.resumed:
+        print("Data::: resumed");
+        break;
+      case AppLifecycleState.inactive:
+        print("Data::: inactive");
+
+        break;
+
+      case AppLifecycleState.hidden:
+        print("Data::: hidden");
+
+        break;
+
+      case AppLifecycleState.paused:
+        print("Data::: paused");
+
+        break;
+    }
   }
 
   final ValueNotifier<bool> _isToConnect = ValueNotifier<bool>(false);
