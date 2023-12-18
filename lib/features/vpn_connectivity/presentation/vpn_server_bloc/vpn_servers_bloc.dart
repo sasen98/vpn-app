@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vpn_app/constants/app_constants.dart';
-import 'package:vpn_app/features/vpn_connectivity/data/repo_impl/vpn_api_repo_impl.dart';
+import 'package:vpn_app/features/vpn_connectivity/domain/abs_repo/abs_vpn_api_repo.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 import 'package:vpn_app/network/failure.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
@@ -22,9 +22,9 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
             status: StateStatus.loading,
             selectedVpnServer: null),
       );
-      Either<List<VpnModel>, Failure> _respo =
-          await getIt<VpnApiRepoImpl>().getVPNServers();
-      _respo.fold(
+      Either<List<VpnModel>, Failure> respo =
+          await getIt<AbsVpnApiRepo>().getVPNServers();
+      respo.fold(
         (l) => emit(state.copyWith(status: StateStatus.success, vpnServers: l)),
         (r) => emit(
           state.copyWith(failure: r),

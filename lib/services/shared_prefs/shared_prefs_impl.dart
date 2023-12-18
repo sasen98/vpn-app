@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
 import 'package:vpn_app/services/shared_prefs/abs_shared_prefs_service.dart';
 
+@LazySingleton(as: AbsSharedPrefsService)
 class SharedPrefsServiceImpl implements AbsSharedPrefsService {
   @override
   void clearSharedPrefsData() async {
@@ -30,7 +32,7 @@ class SharedPrefsServiceImpl implements AbsSharedPrefsService {
 
   @override
   T? getDynamicModel<T>(
-      {required T, required String key, required Function fromJson}) {
+      {required dynamic T, required String key, required Function fromJson}) {
     var sharedPreferences = getIt<SharedPreferences>();
     try {
       if (sharedPreferences.getString(key) != null) {
@@ -119,12 +121,12 @@ class SharedPrefsServiceImpl implements AbsSharedPrefsService {
   }
 
   @override
-  List<T>? getDynamicModelList<T>(
-      {required T, required String key, required Function fromJson}) {
+  List<R>? getDynamicModelList<T, R>(
+      {required dynamic T, required String key, required Function fromJson}) {
     var sharedPreferences = getIt<SharedPreferences>();
     try {
       if (sharedPreferences.getStringList(key) != null) {
-        List<T> temp = [];
+        List<R> temp = [];
         sharedPreferences.getStringList(key)?.map((e) {
           temp.add(fromJson(json.decode(e)));
         });

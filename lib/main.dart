@@ -12,7 +12,7 @@ import 'package:vpn_app/services/di/di_injectable.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  configureDependencies();
+  await configureDependencies();
   runApp(const MyApp());
 }
 

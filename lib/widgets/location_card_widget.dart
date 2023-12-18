@@ -15,23 +15,19 @@ class NetworkCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.r),
         ),
-        child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(15.r),
-          child: ListTile(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.r),
-            ),
-
-            //flag
-            leading: data.icon,
-
-            //title
-            title: Text(data.title),
-
-            //subtitle
-            subtitle: Text(data.subtitle),
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
           ),
+
+          //flag
+          leading: data.icon,
+
+          //title
+          title: Text(data.title),
+
+          //subtitle
+          subtitle: Text(data.subtitle),
         ));
   }
 }
