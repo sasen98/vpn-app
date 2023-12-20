@@ -26,7 +26,16 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
       Either<List<VpnModel>, Failure> respo =
           await getIt<AbsVpnApiRepo>().getVPNServers();
       respo.fold(
-        (l) => emit(state.copyWith(status: StateStatus.success, vpnServers: l)),
+        (l) {
+          emit(state.copyWith(status: StateStatus.success, vpnServers: l));
+          if (state.selectedVpnServer == null) {
+            add(
+              SelectVpnServerEvent(
+                selectedModel: _selectFastestSever(vpnList: l),
+              ),
+            );
+          }
+        },
         (r) => emit(
           state.copyWith(failure: r),
         ),
@@ -38,5 +47,14 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
     on<ResetVpnServersEvent>((event, emit) {
       emit(VpnServersInitialState());
     });
+  }
+  VpnModel _selectFastestSever({required List<VpnModel> vpnList}) {
+    VpnModel _fastestServer = vpnList[0];
+    for (int i = 1; i < vpnList.length; i++) {
+      if (vpnList[i].speed > _fastestServer.speed) {
+        _fastestServer = vpnList[i];
+      }
+    }
+    return _fastestServer;
   }
 }
