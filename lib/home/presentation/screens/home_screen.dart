@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_app/constants/app_colors.dart';
+import 'package:vpn_app/features/vpn_connectivity/services/connectivity_services.dart';
 import 'package:vpn_app/route/routes.dart';
+import 'package:vpn_app/services/vpn_engine.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -14,8 +16,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<bool> _isToConnect = ValueNotifier<bool>(false);
+  final ConnectivityService _controller = ConnectivityService();
+
   @override
   Widget build(BuildContext context) {
+    VpnEngine.vpnStageSnapshot().listen((event) {
+      _controller.vpnState = event;
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vpn App'),
