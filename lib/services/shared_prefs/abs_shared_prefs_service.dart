@@ -15,7 +15,7 @@ abstract class AbsSharedPrefsService {
     required String key,
   });
 
-  List<T>? getDynamicModelList<T>({
+  List<R>? getDynamicModelList<T, R>({
     required dynamic T,
     required String key,
     required Function fromJson,

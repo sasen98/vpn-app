@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_app/constants/app_colors.dart';
 import 'package:vpn_app/features/vpn_connectivity/services/connectivity_services.dart';
 import 'package:vpn_app/route/routes.dart';
 import 'package:vpn_app/services/vpn_engine.dart';
+import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
+import 'package:vpn_app/services/di/di_injectable.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -15,6 +18,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  initState() {
+    if (getIt<VpnServersBloc>().state.vpnServers.isEmpty) {
+      getIt<VpnServersBloc>().add(FetchAllVpnServersEvent());
+    }
+    super.initState();
+  }
+
   final ValueNotifier<bool> _isToConnect = ValueNotifier<bool>(false);
   final ConnectivityService _controller = ConnectivityService();
 
@@ -235,12 +246,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         size: 37.w,
                       ),
-                      Text(
-                        "Select Country / Location",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp),
+                      BlocBuilder<VpnServersBloc, VpnServersState>(
+                        builder: (context, state) {
+                          return state.selectedVpnServer != null
+                              ? Row(
+                                  children: [
+                                    Image.asset(
+                                        'assets/flags/${state.selectedVpnServer?.countryShort.toLowerCase()}.png',
+                                        height: 40.h,
+                                        width: 40.w,
+                                        fit: BoxFit.cover),
+                                    20.horizontalSpace,
+                                    Text(
+                                      state.selectedVpnServer?.countryLong ??
+                                          "",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14.sp),
+                                    )
+                                  ],
+                                )
+                              : Text(
+                                  "Select Country / Location",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp),
+                                );
+                        },
                       ),
                       Icon(
                         Icons.chevron_right_rounded,
