@@ -128,7 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(190.r),
                             onTap: () {
-                              _isToConnect.value = !_isToConnect.value;
+                              _controller.connectToVpn();
+                              // _isToConnect.value = !_isToConnect.value;
                             },
                             child: Container(
                                 height: 180.h,
