@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vpn_app/constants/app_colors.dart';
-import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
+import 'package:vpn_app/features/vpn_connectivity/services/connectivity_services.dart';
 import 'package:vpn_app/route/routes.dart';
+import 'package:vpn_app/services/vpn_engine.dart';
+import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,8 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final ValueNotifier<bool> _isToConnect = ValueNotifier<bool>(false);
+  final ConnectivityService _controller = ConnectivityService();
+
   @override
   Widget build(BuildContext context) {
+    VpnEngine.vpnStageSnapshot().listen((event) {
+      _controller.vpnState = event;
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vpn App'),
@@ -120,7 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(190.r),
                             onTap: () {
-                              _isToConnect.value = !_isToConnect.value;
+                              _controller.connectToVpn();
+                              // _isToConnect.value = !_isToConnect.value;
                             },
                             child: Container(
                                 height: 180.h,
