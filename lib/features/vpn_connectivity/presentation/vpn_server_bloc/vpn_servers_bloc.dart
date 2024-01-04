@@ -5,7 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:vpn_app/constants/app_constants.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/abs_repo/abs_vpn_api_repo.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
-import 'package:vpn_app/network/failure.dart';
+import 'package:vpn_app/utils/data_state.dart';
+import 'package:vpn_app/utils/failure.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
 
 part 'vpn_servers_event.dart';
@@ -19,16 +20,14 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
     on<FetchAllVpnServersEvent>((event, emit) async {
       emit(
         state.copyWith(
-            vpnServers: [],
-            status: StateStatus.loading,
-            selectedVpnServer: null),
+            vpnServers: [], status: APIStatus.loading, selectedVpnServer: null),
       );
       Either<List<VpnModel>, Failure> respo =
           await getIt<AbsVpnApiRepo>().getVPNServers();
       respo.fold(
         (l) {
-          emit(state.copyWith(status: StateStatus.success, vpnServers: l));
-          if (state.selectedVpnServer == null) {
+          emit(state.copyWith(status: APIStatus.success, vpnServers: l));
+          if (state.selectedVpnServer == null && l.isNotEmpty) {
             add(
               SelectVpnServerEvent(
                 selectedModel: _selectFastestSever(vpnList: l),
@@ -49,12 +48,12 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
     });
   }
   VpnModel _selectFastestSever({required List<VpnModel> vpnList}) {
-    VpnModel _fastestServer = vpnList[0];
+    VpnModel fastestServer = vpnList[0];
     for (int i = 1; i < vpnList.length; i++) {
-      if (vpnList[i].speed > _fastestServer.speed) {
-        _fastestServer = vpnList[i];
+      if (vpnList[i].speed > fastestServer.speed) {
+        fastestServer = vpnList[i];
       }
     }
-    return _fastestServer;
+    return fastestServer;
   }
 }

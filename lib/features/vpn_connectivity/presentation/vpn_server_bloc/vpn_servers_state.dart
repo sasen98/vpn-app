@@ -9,13 +9,13 @@ sealed class VpnServersState extends Equatable {
   });
   final List<VpnModel> vpnServers;
   final VpnModel? selectedVpnServer;
-  final StateStatus status;
+  final APIStatus status;
   final Failure? failure;
 
   VpnServersState copyWith({
     List<VpnModel>? vpnServers,
     VpnModel? selectedVpnServer,
-    StateStatus? status,
+    APIStatus? status,
     Failure? failure,
   });
 
@@ -39,7 +39,7 @@ final class VpnServersImplState extends VpnServersState {
   VpnServersState copyWith(
       {List<VpnModel>? vpnServers,
       VpnModel? selectedVpnServer,
-      StateStatus? status,
+      APIStatus? status,
       Failure? failure}) {
     return VpnServersImplState(
       selectedVpnServer: selectedVpnServer ?? this.selectedVpnServer,
@@ -54,7 +54,7 @@ final class VpnServersInitialState extends VpnServersImplState {
   VpnServersInitialState()
       : super(
           vpnServers: [],
-          status: StateStatus.initial,
+          status: APIStatus.initial,
           selectedVpnServer: null,
           failure: Failure(message: "", statusCode: 100),
         );

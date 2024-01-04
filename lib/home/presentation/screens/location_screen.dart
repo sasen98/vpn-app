@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:vpn_app/constants/app_constants.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/model/network_data_model.dart';
 import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
+import 'package:vpn_app/utils/data_state.dart';
 import 'package:vpn_app/widgets/location_card_widget.dart';
 
 class LocationScreen extends StatelessWidget {

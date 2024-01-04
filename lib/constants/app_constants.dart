@@ -1,3 +1,3 @@
-enum StateStatus { initial, loading, success, fail }
+enum APIStatus { initial, loading, success, fail }
 
 class AppConstants {}

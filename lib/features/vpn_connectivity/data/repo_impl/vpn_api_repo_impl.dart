@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
-import 'package:vpn_app/network/failure.dart';
+import 'package:vpn_app/utils/failure.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
 import 'package:vpn_app/services/shared_prefs/abs_get_shared_prefs.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/abs_repo/abs_vpn_api_repo.dart';
@@ -10,7 +9,6 @@ import 'package:vpn_app/features/vpn_connectivity/domain/model/ip_detail_model.d
 import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 import 'package:dio/dio.dart';
 import 'package:csv/csv.dart';
-import 'package:vpn_app/widgets/custom_toast.dart';
 import 'package:dartz/dartz.dart';
 
 @LazySingleton(as: AbsVpnApiRepo)
@@ -49,15 +47,19 @@ class VpnApiRepoImpl implements AbsVpnApiRepo {
   }
 
   @override
-  Future<void> getIPDetails({required IPDetailModel ipData}) async {
+  Future<Either<IPDetailModel, Failure>> getIPDetails() async {
     try {
+      IPDetailModel? _model;
       final res = await _dio.get('http://ip-api.com/json/');
       final data = jsonDecode(res.data);
-      log(data.toString());
-      ipData = IPDetailModel.fromJson(data);
+      _model = IPDetailModel.fromJson(data);
+      if (_model != null) {
+        return left(_model);
+      } else {
+        return right(Failure(message: 'Something went wrong', statusCode: 500));
+      }
     } catch (e) {
-      CustomToast.showToast(message: e.toString());
-      log('\ngetIPDetailsE: $e');
+      return right(Failure(message: e.toString(), statusCode: 500));
     }
   }
 }
