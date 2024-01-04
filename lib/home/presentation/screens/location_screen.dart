@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:vpn_app/constants/app_constants.dart';
 import 'package:vpn_app/features/vpn_connectivity/domain/model/network_data_model.dart';
 import 'package:vpn_app/features/vpn_connectivity/presentation/vpn_server_bloc/vpn_servers_bloc.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
@@ -16,7 +17,7 @@ class LocationScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Choose Location")),
       body: BlocBuilder<VpnServersBloc, VpnServersState>(
         builder: (context, state) {
-          return (state.status == StateStatus.success)
+          return (state.status == APIStatus.success)
               ? (state.vpnServers.isNotEmpty)
                   ? ListView.builder(
                       itemBuilder: (context, index) {

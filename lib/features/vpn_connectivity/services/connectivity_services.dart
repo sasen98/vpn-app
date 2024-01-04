@@ -6,7 +6,6 @@ import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_config_model.
 import 'package:vpn_app/features/vpn_connectivity/domain/model/vpn_model.dart';
 import 'package:vpn_app/services/di/di_injectable.dart';
 import 'package:vpn_app/services/shared_prefs/abs_get_shared_prefs.dart';
-import 'package:vpn_app/services/shared_prefs/get_shared_prefs_impl.dart';
 import 'package:vpn_app/services/vpn_engine.dart';
 
 class ConnectivityService {

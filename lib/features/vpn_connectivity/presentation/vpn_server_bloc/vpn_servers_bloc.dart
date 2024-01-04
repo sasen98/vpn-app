@@ -47,6 +47,7 @@ class VpnServersBloc extends Bloc<VpnServersEvent, VpnServersState> {
     });
     on<SelectVpnServerEvent>((event, emit) {
       getIt<AbsGetSharedPrefsData>().setSelectedVpnServer(event.selectedModel);
+
       emit(state.copyWith(selectedVpnServer: event.selectedModel));
     });
     on<ResetVpnServersEvent>((event, emit) {
